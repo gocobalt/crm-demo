@@ -24,7 +24,7 @@
   },
   "homepage": "https://github.com/gocobalt/crm-demo#readme",
   "dependencies": {
-    "@cobaltio/cobalt": "^1.0.2",
+    "@cobaltio/cobalt": "1.0.1",
     "@typegoose/typegoose": "^11.4.1",
     "axios": "^1.4.0",
     "bullmq": "^4.7.3",

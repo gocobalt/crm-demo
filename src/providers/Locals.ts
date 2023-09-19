@@ -22,11 +22,11 @@ class Locals {
             port: redis_port,
             host: redis_host,
         };
-        const deleteTestDataQueue = process.env.DELETE_TEST_DATA_QUEUE;
+        const deleteCRMDataQueue = process.env.DELETE_CRM_DATA_QUEUE;
         const service_url = {
             embed_backend: process.env.EMBED_BACKEND,
         };
-        const cobalt = {
+        const cobalt_crm = {
             api_key: process.env.API_KEY,
             app_id: process.env.APP_ID,
             organization_id: process.env.ORGANIZATION_ID,
@@ -40,9 +40,9 @@ class Locals {
             port,
             jwtSecretKey,
             redisConfig,
-            deleteTestDataQueue,
+            deleteCRMDataQueue,
             service_url,
-            cobalt,
+            cobalt_crm,
         };
     }
 }

@@ -3,7 +3,8 @@ import Locals from "../providers/Locals";
 
 function getClient() {
     const Client: Cobalt = new Cobalt({
-        apiKey: Locals.config().cobalt.api_key as string,
+        apiKey: Locals.config().cobalt_crm.api_key as string,
+        sandbox: true,
     });
 
     return Client;
@@ -16,6 +17,12 @@ export default class CobaltService {
                 resolve(
                     getClient().upsertLinkedAccount({
                         linked_account_id: linked_account_id,
+                        your_app: {
+                            app_id: Locals.config().cobalt_crm.app_id,
+                            auth_credentials: {
+                                Authorization: `Bearer ${linked_account_id}`,
+                            },
+                        },
                     })
                 );
             } catch (error) {
@@ -24,7 +31,9 @@ export default class CobaltService {
         });
     }
 
-    public static async getTokenForLinkedAccount(linked_account_id: string) {
+    public static async getTokenForLinkedAccount(
+        linked_account_id: string
+    ) {
         return new Promise((resolve, reject) => {
             try {
                 resolve(
@@ -38,7 +47,9 @@ export default class CobaltService {
         });
     }
 
-    public static async getApplications(linked_account_id: string) {
+    public static async getApplications(
+        linked_account_id: string
+    ) {
         return new Promise((resolve, reject) => {
             try {
                 resolve(getClient().getApplications(linked_account_id));
@@ -66,8 +77,8 @@ export default class CobaltService {
     public static async triggerEvent(
         linked_account_id: string,
         event: string,
-        slug?: string,
-        payload?: Record<string, any>
+        payload?: Record<string, any>,
+        slug?: string
     ) {
         return new Promise((resolve, reject) => {
             try {
@@ -93,7 +104,7 @@ export default class CobaltService {
         return new Promise((resolve, reject) => {
             try {
                 resolve(
-                    getClient().config({
+                    getClient().findOrCreateConfig({
                         linked_account_id,
                         slug,
                         config_id,
@@ -212,7 +223,7 @@ export default class CobaltService {
                 resolve(
                     getClient().deleteConfig({
                         linked_account_id,
-                        slug
+                        slug,
                     })
                 );
             } catch (error) {

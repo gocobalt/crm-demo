@@ -1,9 +1,9 @@
-import { deleteTestDataQueue } from "../providers/MessageQueue";
+import { deleteCRMDataQueue } from "../providers/MessageQueue";
 import { generateJWTWithExpiry } from "../providers/JWT";
-import CompanyModel from "../models/crm/Company";
-import ContactModel from "../models/crm/Contact";
-import DealModel from "../models/crm/Deal";
-import LeadModel from "../models/crm/Lead";
+import CompanyModel from "../models/Company";
+import ContactModel from "../models/Contact";
+import DealModel from "../models/Deal";
+import LeadModel from "../models/Lead";
 import CobaltService from "./cobalt";
 import axios from "axios";
 import Locals from "../providers/Locals";
@@ -12,8 +12,8 @@ export default class SessionService {
     public static async createSession() {
         const session_id = generateJWTWithExpiry({}, 3600);
 
-        await deleteTestDataQueue.add(
-            "deleteTestDataJob",
+        await deleteCRMDataQueue.add(
+            "deleteCRMDataJob",
             {
                 session_id,
             },
@@ -35,9 +35,9 @@ export default class SessionService {
             `${
                 Locals.config().service_url.embed_backend
             }/api/v1/linked-acc?account_id=${session_id}&org_id=${
-                Locals.config().cobalt.organization_id
+                Locals.config().cobalt_crm.organization_id
             }&environment=production`,
-            { headers: { "x-api-key": Locals.config().cobalt.api_key } }
+            { headers: { "x-api-key": Locals.config().cobalt_crm.api_key } }
         );
 
         return { success: true };

@@ -2,8 +2,8 @@ import { Queue } from "bullmq";
 import Locals from "./Locals";
 import redis from "./Redis";
 
-export const deleteTestDataQueue = new Queue(
-    Locals.config().deleteTestDataQueue,
+export const deleteCRMDataQueue = new Queue(
+    Locals.config().deleteCRMDataQueue,
     {
         connection: redis.duplicate(),
         defaultJobOptions: {
